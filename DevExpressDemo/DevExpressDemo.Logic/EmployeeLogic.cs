@@ -3,6 +3,7 @@ using System.Linq;
 using DevExpressDemo.Data.Models;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.IRepository;
+using DevExpressDemo.Repository;
 using DevExpressDemo.Repository.UnitOfWork;
 
 namespace DevExpressDemo.Logic
@@ -11,6 +12,7 @@ namespace DevExpressDemo.Logic
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+        
         public EmployeeLogic(IEmployeeRepository employeeRepository, IUnitOfWorkFactory unitOfWorkFactory)
         {
             _employeeRepository = employeeRepository;
