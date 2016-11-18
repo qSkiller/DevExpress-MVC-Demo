@@ -1,0 +1,65 @@
+@* DXCOMMENT: Configure GridView *@
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "GridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Employee", Action = "EmployeePartialView" };
+
+        //Setting search panel
+        settings.SettingsSearchPanel.Visible = true;
+
+        //Setting keyword default value
+        settings.PreRender = (sender, e) =>
+        {
+            var gridView = (MVCxGridView)sender;
+            gridView.SearchPanelFilter = "";
+        };
+
+        //Setting filter
+        settings.EnableRowsCache = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFooter = true;
+        //settings.SettingsBehavior.AllowFocusedRow = true;
+        //settings.SettingsBehavior.AllowCellMerge = true;
+        settings.SettingsPager.Visible = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        //settings.Settings.ShowHeaderFilterButton = true;
+
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Count, "EmployeeName");
+
+        settings.SettingsPager.PageSize = 3;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.ControlStyle.Paddings.Padding = Unit.Pixel(0);
+        settings.ControlStyle.Border.BorderWidth = Unit.Pixel(0);
+        settings.ControlStyle.BorderBottom.BorderWidth = Unit.Pixel(1);
+
+
+        //Setting option employee
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialCreate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialDelete" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialUpdate" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+
+        // DXCOMMENT: Specify the grid's key field name and define grid columns in accordance with data model fields
+        settings.KeyFieldName = "EmployeeId";
+        settings.Columns.Add("EmployeeName");
+        settings.Columns.Add("EmployeePhone");
+        settings.Columns.Add("EmployeeAddress");
+        settings.Columns.Add("EmployeeEducation");
+        settings.Columns.Add("EmployeeOpus");
+
+        // Setting scroll bar
+        //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        //settings.Settings.VerticalScrollableHeight = 100;
+    }).Bind(Model).GetHtml()

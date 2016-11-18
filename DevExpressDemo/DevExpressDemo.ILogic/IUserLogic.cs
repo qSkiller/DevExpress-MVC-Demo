@@ -10,6 +10,6 @@ namespace DevExpressDemo.ILogic
         void Delete(int id);
         User Get(int id);
         string Login(string userName, string password);
-        IEnumerable<User> QuesyByName(string userName);
+        IEnumerable<User> QueryByName(string userName);
     }
 }

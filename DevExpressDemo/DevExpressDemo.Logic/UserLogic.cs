@@ -66,7 +66,7 @@ namespace DevExpressDemo.Logic
             return user.Password.Equals(password) ? user.UserId.ToString() : "the password error";
         }
 
-        public IEnumerable<User> QuesyByName(string userName)
+        public IEnumerable<User> QueryByName(string userName)
         {
             return CheckIfExist(userName)
                 ? _userRepository.Query().Where(x => x.UserName == userName).ToList()

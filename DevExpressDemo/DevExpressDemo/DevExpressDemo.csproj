@@ -283,7 +283,7 @@
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Home\GridViewPartialView.cshtml" />
+    <Content Include="Views\Employee\EmployeePartialView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -304,11 +304,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Installer\WindsorControllerFactory.cs" />
     <Compile Include="Installer\ControllersInstaller.cs" />
     <Compile Include="Installer\WindsorBootstrapper.cs" />
-    <Compile Include="Installer\WindsorCompositionRoot.cs" />
-    <Compile Include="Installer\WindsorDependencyResolver.cs" />
-    <Compile Include="Installer\WindsorDependencyScope.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -347,7 +345,9 @@
       <Name>DevExpressDemo.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

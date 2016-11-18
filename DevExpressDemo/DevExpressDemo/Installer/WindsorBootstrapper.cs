@@ -1,4 +1,5 @@
-﻿using Castle.MicroKernel.Registration;
+﻿using System.Web.Mvc;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.Installer;
 using DevExpressDemo.Logic.Installer;
@@ -17,7 +18,8 @@ namespace DevExpressDemo.Installer
                 FromAssembly.Containing<RepositoryInstaller>(),
                 FromAssembly.Containing<LogicInstaller>()
                 );
-
+            var controllerFactory = new WindsorControllerFactory(_container.Kernel);
+            ControllerBuilder.Current.SetControllerFactory(controllerFactory);
             _container.Register(Component.For<IWindsorContainer>().Instance(_container).LifestyleSingleton());
         }
 

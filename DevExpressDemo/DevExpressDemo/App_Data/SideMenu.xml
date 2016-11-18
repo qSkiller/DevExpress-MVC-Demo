@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu>
-  <!--<group Text="Platform">
+  <group Text="Platform">
     <item Text="Windows" />
     <item Text="Linux" />
     <item Text="Mac OS" />
@@ -23,5 +23,5 @@
     <item Text="C++" />
     <item Text="Java" />
     <item Text="PHP" />
-  </group>-->
+  </group>
 </menu>

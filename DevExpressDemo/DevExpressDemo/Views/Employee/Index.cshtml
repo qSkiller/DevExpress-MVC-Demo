@@ -1,6 +1,9 @@
-﻿@model IEnumerable<DevExpressDemo.Data.Models.Employee>
+﻿@model System.Collections.IEnumerable
 
-@{
+@Html.Partial("EmployeePartialView", Model)
+
+@*@model IEnumerable<DevExpressDemo.Data.Models.Employee>*@
+@*@{
     ViewBag.Title = "Index";
 }
 
@@ -54,4 +57,4 @@
     </tr>
 }
 
-</table>
+</table>*@
