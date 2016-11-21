@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using DevExpressDemo.Data.Models;
+using DevExpressDemo.LogicModel;
 
 namespace DevExpressDemo.ILogic
 {
     public interface IEmployeeLogic
     {
-        void Create(Employee model);
-        void Edit(Employee model);
+        void Create(EmployeeLogicModel model);
+        void Edit(EmployeeLogicModel model);
         void Delete(int id);
-        Employee Get(int id);
-        IEnumerable<Employee> GetAll();
+        EmployeeLogicModel Get(int id);
+        IEnumerable<EmployeeLogicModel> GetAll();
         bool CheckExist(string employeeName);
     }
 }

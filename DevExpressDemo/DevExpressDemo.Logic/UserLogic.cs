@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DevExpressDemo.Data.Models;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.IRepository;
+using DevExpressDemo.LogicModel;
 using DevExpressDemo.Repository.UnitOfWork;
 
 namespace DevExpressDemo.Logic
@@ -18,14 +18,15 @@ namespace DevExpressDemo.Logic
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public string Create(User model)
+        public string Create(UserLogicModel model)
         {
+            var user = model.ToModel();
             var message = "";
-            if (!CheckIfExist(model.UserName))
+            if (!CheckIfExist(user.UserName))
             {
                 using (var unitOfwork = _unitOfWorkFactory.GetCurrentUnitOfWork())
                 {
-                    _userRepository.Create(model);
+                    _userRepository.Create(user);
                     unitOfwork.Commit();
                 }
             }
@@ -36,11 +37,12 @@ namespace DevExpressDemo.Logic
             return message;
         }
 
-        public void Edit(User model)
+        public void Edit(UserLogicModel model)
         {
+            var user = model.ToModel();
             using (var unitOfwork = _unitOfWorkFactory.GetCurrentUnitOfWork())
             {
-                _userRepository.Edit(model);
+                _userRepository.Edit(user);
                 unitOfwork.Commit();
             }
         }
@@ -66,21 +68,20 @@ namespace DevExpressDemo.Logic
             return user.Password.Equals(password) ? user.UserId.ToString() : "the password error";
         }
 
-        public IEnumerable<User> QueryByName(string userName)
+        public IEnumerable<UserLogicModel> GetAll()
         {
-            return CheckIfExist(userName)
-                ? _userRepository.Query().Where(x => x.UserName == userName).ToList()
-                : new List<User>();
+            return _userRepository.Query()?.Select(x => new UserLogicModel
+            {
+                UserId = x.UserId,
+                UserName=x.UserName,
+                Password = x.Password
+            }).ToList();
         }
 
-        public IEnumerable<User> GetAll()
+        public UserLogicModel Get(int id)
         {
-            return _userRepository.Query().ToList();
-        }
-
-        public User Get(int id)
-        {
-            return _userRepository.Get(id);
+            var user = _userRepository.Get(id);
+            return user?.ToLogicModel();
         }
 
         private bool CheckIfExist(string userName)

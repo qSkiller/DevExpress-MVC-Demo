@@ -1,6 +1,7 @@
 ﻿@model System.Collections.IEnumerable
 
-@Html.Partial("EmployeePartialView", Model)
+@Html.Action("EmployeePartialView", Model)
+
 
 @*@model IEnumerable<DevExpressDemo.Data.Models.Employee>*@
 @*@{

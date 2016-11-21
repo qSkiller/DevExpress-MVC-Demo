@@ -3,7 +3,7 @@ using System.Linq;
 using DevExpressDemo.Data.Models;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.IRepository;
-using DevExpressDemo.Repository;
+using DevExpressDemo.LogicModel;
 using DevExpressDemo.Repository.UnitOfWork;
 
 namespace DevExpressDemo.Logic
@@ -19,20 +19,22 @@ namespace DevExpressDemo.Logic
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public void Create(Employee model)
+        public void Create(EmployeeLogicModel model)
         {
+            var employee = model.ToModel();
             using (var unitOfwork = _unitOfWorkFactory.GetCurrentUnitOfWork())
             {
-                _employeeRepository.Create(model);
+                _employeeRepository.Create(employee);
                 unitOfwork.Commit();
             }
         }
 
-        public void Edit(Employee model)
+        public void Edit(EmployeeLogicModel model)
         {
+            var employee = model.ToModel();
             using (var unitOfwork = _unitOfWorkFactory.GetCurrentUnitOfWork())
             {
-                _employeeRepository.Edit(model);
+                _employeeRepository.Edit(employee);
                 unitOfwork.Commit();
             }
         }
@@ -46,14 +48,23 @@ namespace DevExpressDemo.Logic
             }
         }
 
-        public Employee Get(int id)
+        public EmployeeLogicModel Get(int id)
         {
-            return _employeeRepository.Get(id);
+            var employee = _employeeRepository.Get(id);
+            return employee?.ToLogicModel();
         }
 
-        public IEnumerable<Employee> GetAll()
+        public IEnumerable<EmployeeLogicModel> GetAll()
         {
-            return _employeeRepository.Query().ToList();
+            return _employeeRepository.Query()?.Select(x => new EmployeeLogicModel
+            {
+                EmployeeId = x.EmployeeId,
+                EmployeeName = x.EmployeeName,
+                EmployeePhone = x.EmployeePhone,
+                EmployeeAddress = x.EmployeeAddress,
+                EmployeeEducation = x.EmployeeEducation,
+                EmployeeOpus = x.EmployeeOpus
+            }).ToList();
         }
 
         public IEnumerable<Employee> Get(string name)

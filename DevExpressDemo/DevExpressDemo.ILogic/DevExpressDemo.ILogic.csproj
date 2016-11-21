@@ -45,9 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevExpressDemo.Data\DevExpressDemo.Data.csproj">
-      <Project>{7a227e15-c267-416a-9634-9f662ac21762}</Project>
-      <Name>DevExpressDemo.Data</Name>
+    <ProjectReference Include="..\DevExpressDemo.LogicModel\DevExpressDemo.LogicModel.csproj">
+      <Project>{cc1da41c-31a8-423b-90b4-d8130d20f379}</Project>
+      <Name>DevExpressDemo.LogicModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

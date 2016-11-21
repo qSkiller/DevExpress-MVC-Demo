@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
-using DevExpressDemo.Data.Models;
 using DevExpressDemo.ILogic;
+using DevExpressDemo.Models;
 
 namespace DevExpressDemo.Controllers
 {
@@ -28,7 +28,7 @@ namespace DevExpressDemo.Controllers
         }
 
         [HttpPost,ValidateInput(false)]
-        public ActionResult EmployeePartialCreate(Employee employee)
+        public ActionResult EmployeePartialCreate(EmployeeModel employee)
         {
             //if (!ModelState.IsValid)
             //{
@@ -37,7 +37,7 @@ namespace DevExpressDemo.Controllers
 
             if (employee != null)
             {
-                _employeeLogic.Create(employee);
+                _employeeLogic.Create(employee.ToLogicModel());
             }
 
             return RedirectToAction("Index", "Employee");
@@ -55,11 +55,11 @@ namespace DevExpressDemo.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EmployeePartialUpdate(Employee employee)
+        public ActionResult EmployeePartialUpdate(EmployeeModel employee)
         {
             if (employee != null)
             {
-                _employeeLogic.Edit(employee);
+                _employeeLogic.Edit(employee.ToLogicModel());
             }
 
             return RedirectToAction("Index", "Employee");

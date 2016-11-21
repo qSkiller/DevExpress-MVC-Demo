@@ -284,6 +284,7 @@
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Employee\EmployeePartialView.cshtml" />
+    <None Include="Views\Home\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -308,6 +309,8 @@
     <Compile Include="Installer\ControllersInstaller.cs" />
     <Compile Include="Installer\WindsorBootstrapper.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ConvertModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Northwind.designer.cs">
@@ -316,6 +319,7 @@
       <DependentUpon>Northwind.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\NorthwindDataProvider.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -328,13 +332,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DevExpressDemo.Data\DevExpressDemo.Data.csproj">
-      <Project>{7a227e15-c267-416a-9634-9f662ac21762}</Project>
-      <Name>DevExpressDemo.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DevExpressDemo.ILogic\DevExpressDemo.ILogic.csproj">
       <Project>{b7e7397f-11b3-4c11-8e4e-28c879a7230e}</Project>
       <Name>DevExpressDemo.ILogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevExpressDemo.LogicModel\DevExpressDemo.LogicModel.csproj">
+      <Project>{cc1da41c-31a8-423b-90b4-d8130d20f379}</Project>
+      <Name>DevExpressDemo.LogicModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\DevExpressDemo.Logic\DevExpressDemo.Logic.csproj">
       <Project>{82524e48-98fc-4904-b48a-2335a2280406}</Project>
