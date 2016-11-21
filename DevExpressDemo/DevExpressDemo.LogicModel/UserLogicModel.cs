@@ -5,8 +5,8 @@ namespace DevExpressDemo.LogicModel
 {
     public class UserLogicModel
     {
-        public int UserId { set; get; }
-        public string UserName { set; get; }
-        public string Password { set; get; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

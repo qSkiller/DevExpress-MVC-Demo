@@ -36,6 +36,8 @@
         group.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
         group.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Left;
 
+        
+
         group.ColSpan = 1;
         group.ColCount = 1;
 
@@ -43,8 +45,50 @@
         .SetNestedContent("<span>If you have no account, you can " + @Html.ActionLink("register", "Register") + ".</span>");
         group.Items.AddEmptyItem().Height = 20;
 
-        group.Items.Add(item => item.UserName);
-        group.Items.Add(item => item.Password);
+        //group.Items.Add(item => item.UserName);
+        //group.Items.Add(item => item.Password);
+
+        group.Items
+                .Add(m =>
+                {
+                    m.Caption = "Name";
+                    m.CaptionSettings.AssociatedNestedExtensionName = "RegistrationData.FirstName";
+                })
+                .SetNestedContent(() =>
+                {
+                    ViewContext.Writer.Write("<table><tr><td style=\"padding-right:5px;\">");
+
+                    Html.DevExpress().TextBoxFor(item => item.UserName, s =>
+                    {
+                        s.Width = 170;
+                        s.ShowModelErrors = true;
+                        s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.Text;
+                        s.Properties.ValidationSettings.Display = Display.Dynamic;
+                        s.Properties.ValidationSettings.ErrorText = "*";
+                    }).Render();
+
+                    ViewContext.Writer.Write("</td><td>");
+                    ViewContext.Writer.Write("</td></tr></table>");
+                });
+        
+
+        group.Items.Add(item => item.Password, AuthorizationDataTextBoxSettingsMethod);
+        group.Items.Add(item => item.ConfirmPassword, AuthorizationDataTextBoxSettingsMethod);
+
+
+        group.ShowCaption = DefaultBoolean.False;
+        group.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        group.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+        group.Items.Add(itemSettings => itemSettings.Caption = " ").SetNestedContent(() =>
+        {
+            Html.DevExpress().Captcha(captchaSettings =>
+            {
+                captchaSettings.Name = "captcha";
+                captchaSettings.TextBox.Position = DevExpress.Web.Captcha.ControlPosition.Bottom;
+                captchaSettings.TextBox.ShowLabel = false;
+                captchaSettings.RefreshButton.Visible = false;
+            }).Render();
+        });
 
         group.Items.Add(item =>
         {

@@ -1,10 +1,22 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace DevExpressDemo.Models
 {
     public class UserModel
     {
-        public int UserId { set; get; }
-        public string UserName { set; get; }
-        public string Password { set; get; }
+        public int UserId { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [DisplayFormat(NullDisplayText = "Last Name")]
+        public string UserName { get; set; }
+
+        [Required]
+        [StringLength(20,MinimumLength = 5)]
+        public string Password { get; set; }
+        
+        [Display(Name = "ConfirmPassword")]
+        [Compare("ConfirmPassword", ErrorMessage = "The passowrd you entered do not match. ")]
+        public string ConfirmPassword { get; set; }
     }
 }

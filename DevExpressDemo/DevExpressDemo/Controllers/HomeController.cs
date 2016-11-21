@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.Models;
+using DevExpress.Web.Mvc;
 
 namespace DevExpressDemo.Controllers
 {
@@ -39,6 +40,13 @@ namespace DevExpressDemo.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Register(UserModel user)
         {
+            //&& CaptchaExtension.GetIsValid("captcha")
+            if (ModelState.IsValid)
+            {
+                ViewBag.SuccessValidation = true;
+                
+            }
+
             ViewBag["message"] = _userLogic.Create(user?.ToLogicModel());
             return RedirectToAction(ViewBag["message"] == null ? "Index" : "Register", "Home");
         }

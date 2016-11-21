@@ -5,12 +5,12 @@ namespace DevExpressDemo.Data.Models
     public class Employee
     {
         [Key]
-        public int EmployeeId { set; get; }
+        public int EmployeeId { get; set; }
 
-        public string EmployeeName { set; get; }
-        public string EmployeePhone { set; get; }
-        public string EmployeeAddress { set; get; }
-        public string EmployeeEducation { set; get; }
-        public string EmployeeOpus { set; get; }
+        public string EmployeeName { get; set; }
+        public string EmployeePhone { get; set; }
+        public string EmployeeAddress { get; set; }
+        public string EmployeeEducation { get; set; }
+        public string EmployeeOpus { get; set; }
     }
 }
