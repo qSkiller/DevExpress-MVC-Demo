@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.IRepository;
+using DevExpressDemo.Logic.Tools;
 using DevExpressDemo.LogicModel;
 using DevExpressDemo.Repository.UnitOfWork;
 
 namespace DevExpressDemo.Logic
 {
-    public class UserLogic: IUserLogic
+    public class UserLogic : IUserLogic
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
 
-        public UserLogic(IUserRepository userRepository,IUnitOfWorkFactory unitOfWorkFactory)
+        public UserLogic(IUserRepository userRepository, IUnitOfWorkFactory unitOfWorkFactory)
         {
             _userRepository = userRepository;
             _unitOfWorkFactory = unitOfWorkFactory;
@@ -21,6 +23,7 @@ namespace DevExpressDemo.Logic
         public string Create(UserLogicModel model)
         {
             var user = model.ToModel();
+            user.Password = TokenGenerator.EncodeToken(model.Password);
             var message = "";
             if (!CheckIfExist(user.UserName))
             {
@@ -32,7 +35,7 @@ namespace DevExpressDemo.Logic
             }
             else
             {
-                message = "the username was registered, please select a new username to register.";
+                message = "The username was registered, please select a new username to register.";
             }
             return message;
         }
@@ -56,16 +59,14 @@ namespace DevExpressDemo.Logic
             }
         }
 
-        public string Login(string userName, string password)
+        public string Login(UserLogicModel model)
         {
-            var user = _userRepository.Get(userName);
+            var user = model.ToModel();
+            var encodePassword = TokenGenerator.EncodeToken(user.Password);
+            var isLoginSuccess = _userRepository.Query().FirstOrDefault(x => x.UserName == user.UserName && x.Password == encodePassword) != null;
 
-            if (user == null)
-            {
-                return "the username is not register";
-            }
-
-            return user.Password.Equals(password) ? user.UserId.ToString() : "the password error";
+            return isLoginSuccess
+                ? TokenGenerator.Generate(user.UserName, user.Password, DateTime.MaxValue.ToString("yyyy-MM-dd hh:mm")) : string.Empty;
         }
 
         public IEnumerable<UserLogicModel> GetAll()
@@ -73,7 +74,7 @@ namespace DevExpressDemo.Logic
             return _userRepository.Query()?.Select(x => new UserLogicModel
             {
                 UserId = x.UserId,
-                UserName=x.UserName,
+                UserName = x.UserName,
                 Password = x.Password
             }).ToList();
         }

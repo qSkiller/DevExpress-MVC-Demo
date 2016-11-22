@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DevExpressDemo.LogicModel;
+﻿using DevExpressDemo.LogicModel;
 
 namespace DevExpressDemo.ILogic
 {
@@ -9,6 +8,6 @@ namespace DevExpressDemo.ILogic
         void Edit(UserLogicModel model);
         void Delete(int id);
         UserLogicModel Get(int id);
-        string Login(string userName, string password);
+        string Login(UserLogicModel model);
     }
 }

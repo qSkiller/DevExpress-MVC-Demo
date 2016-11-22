@@ -8,7 +8,7 @@ namespace DevExpressDemo.Models
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "*")]
-        [DisplayFormat(NullDisplayText = "Last Name")]
+        //[DisplayFormat(NullDisplayText = "User Name")]
         public string UserName { get; set; }
 
         [Required]

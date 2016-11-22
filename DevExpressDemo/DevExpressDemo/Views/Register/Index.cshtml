@@ -1,7 +1,7 @@
-@model DevExpressDemo.Models.UserModel
+﻿@model DevExpressDemo.Models.UserModel
 
 @{
-    ViewBag.Title = "User SignIn ";
+    ViewBag.Title = "User Registration";
 }
 
 @{
@@ -13,7 +13,7 @@
         item.NestedExtension().TextBox(s =>
         {
             s.Properties.Password = s.Name.Contains("Password");
-            s.Properties.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Right;
+            s.Properties.ValidationSettings.ErrorTextPosition = ErrorTextPosition.Bottom;
             s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.Text;
             s.Properties.ValidationSettings.Display = Display.Dynamic;
             s.ShowModelErrors = true;
@@ -21,36 +21,34 @@
     };
 }
 
-@using (Html.BeginForm("LogIn", "Home", FormMethod.Post))
+
+@using (Html.BeginForm("Register", "Register", FormMethod.Post))
 {
     @Html.DevExpress().FormLayout(settings =>
 {
-    settings.Name = "UserLogin";
+    settings.Name = "UserRegister";
     settings.ColCount = 3;
     settings.AlignItemCaptionsInAllGroups = true;
 
 
     settings.Items.AddGroupItem(group =>
     {
-        group.Caption = "User Information";
-        group.GroupBoxDecoration = GroupBoxDecoration.Box;
-        group.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Left;
+        group.Caption = "Registration Information";
+        group.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        group.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Right;
 
         group.ColSpan = 1;
         group.ColCount = 1;
 
-        group.Items.Add(item => item.Caption = " ")
-        .SetNestedContent("<span>If you have no account, you can " + @Html.ActionLink("register", "Index", "Register") + ".</span>");
         group.Items.AddEmptyItem().Height = 20;
-
         group.Items
                 .Add(m =>
                 {
-                    m.Caption = "User Name";
+                    m.Caption = "Name";
                 })
                 .SetNestedContent(() =>
                 {
-                    //ViewContext.Writer.Write("<table><tr><td style=\"padding-right:5px;\">");
+                    ViewContext.Writer.Write("<table><tr><td style=\"padding-right:5px;\">");
 
                     Html.DevExpress().TextBoxFor(item => item.UserName, s =>
                     {
@@ -61,22 +59,38 @@
                         s.Properties.ValidationSettings.ErrorText = "*";
                     }).Render();
 
-                    //ViewContext.Writer.Write("</td></tr></table>");
+                    ViewContext.Writer.Write("</td></tr></table>");
                 });
+
+
         group.Items.Add(item => item.Password, AuthorizationDataTextBoxSettingsMethod);
-        //group.Items.Add(item => item.Caption = " ")
-        //    .SetNestedContent(ViewBag.ErrMessage == null ? string.Empty : ViewBag.ErrMessage);
-        group.Items.Add(item => item.Caption = " ")
-            .SetNestedContent("<span style=\"color:red;\">" + (ViewBag.ErrMessage ?? string.Empty) + "</span>");
+        group.Items.Add(item => item.ConfirmPassword, AuthorizationDataTextBoxSettingsMethod);
+        group.Items.Add(item =>item.Caption="")
+        .SetNestedContent("<span style=\"color:red;\">"+(ViewBag.ErrMessage ?? string.Empty)+"</span>");
         group.Items.AddEmptyItem().Height = 20;
+
+
+        //group.ShowCaption = DefaultBoolean.False;
+        //group.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        //group.SettingsItemCaptions.HorizontalAlign = FormLayoutHorizontalAlign.Right;
+        //group.Items.Add(itemSettings => itemSettings.Caption = " ").SetNestedContent(() =>
+        //{
+        //    Html.DevExpress().Captcha(captchaSettings =>
+        //    {
+        //        captchaSettings.Name = "captcha";
+        //        captchaSettings.TextBox.Position = DevExpress.Web.Captcha.ControlPosition.Bottom;
+        //        captchaSettings.TextBox.ShowLabel = false;
+        //        captchaSettings.RefreshButton.Visible = false;
+        //    }).Render();
+        //});
 
         group.Items.Add(item =>
         {
             item.Caption = " ";
             item.NestedExtension().Button(s =>
             {
-                s.Name = "signIn";
-                s.Text = "Sign In";
+                s.Name = "signUp";
+                s.Text = "Sign Up";
                 s.UseSubmitBehavior = true;
                 s.Width = Unit.Pixel(100);
             });
@@ -85,5 +99,4 @@
     });
 
 }).GetHtml()
-
 }

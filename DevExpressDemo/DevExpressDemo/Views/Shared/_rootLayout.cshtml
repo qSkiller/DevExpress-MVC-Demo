@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -20,21 +20,23 @@ new Script { ExtensionSuite = ExtensionSuite.GridView }
 </head>
 <body>
     @Html.DevExpress().Panel(settings => {
-        settings.Name = "HeaderPane";
-        settings.FixedPosition = PanelFixedPosition.WindowTop;
-        settings.Collapsible = true;
-        settings.SettingsAdaptivity.CollapseAtWindowInnerWidth = 500;
-        settings.ControlStyle.CssClass = "headerPane";
-        settings.Styles.Panel.CssClass = "panel";
-        settings.Styles.ExpandedPanel.CssClass = "expandedPanel";
-        settings.Styles.ExpandBar.CssClass = "bar";
-        settings.SetContent(() => {
-            Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Full);
-        });
-        settings.SetExpandBarTemplateContent((c) => {
-            Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Title);
-        });
-    }).GetHtml()
+    settings.Name = "HeaderPane";
+    settings.FixedPosition = PanelFixedPosition.WindowTop;
+    settings.Collapsible = true;
+    settings.SettingsAdaptivity.CollapseAtWindowInnerWidth = 500;
+    settings.ControlStyle.CssClass = "headerPane";
+    settings.Styles.Panel.CssClass = "panel";
+    settings.Styles.ExpandedPanel.CssClass = "expandedPanel";
+    settings.Styles.ExpandBar.CssClass = "bar";
+    settings.SetContent(() =>
+    {
+        Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Full);
+    });
+    settings.SetExpandBarTemplateContent((c) =>
+    {
+        Html.RenderPartial("HeaderPartialView", HeaderViewRenderMode.Title);
+    });
+}).GetHtml()
 
     <script type="text/javascript">
         function updateHeaderMenuOrientation(){

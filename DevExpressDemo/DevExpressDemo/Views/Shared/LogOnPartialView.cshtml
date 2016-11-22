@@ -1,12 +1,28 @@
-@if(!Request.IsAuthenticated) {
-    @Html.ActionLink("Register", "Register", "Account") 
-    @: | 
-    @Html.ActionLink("Login", "Login", "Account")
+@*using DevExpress.Data.XtraReports.Wizard.Views
+    @if(!Request.IsAuthenticated) {
+        @Html.ActionLink("Register", "Register", "Account")
+        @: |
+        @Html.ActionLink("Login", "Login", "Account")
+    }
+    else {
+
+        @: Welcome @Html.ActionLink(User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+        @: |
+        @Html.ActionLink("Logout", "LogOff", "Account")
+    }*@
+
+@if (Session["userName"] == null)
+{
+    @Html.ActionLink("Register", "Index", "Register")
+    @:
+    @Html.ActionLink("Login", "Index", "Home")
 }
-else {
- 
-    @: Welcome @Html.ActionLink(User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
- 
-    @: |
-    @Html.ActionLink("Logout", "LogOff", "Account")
+else
+{
+    
+    @: Welcome @Session["userName"].ToString() !
+    @: 
+    @Html.ActionLink("Logout", "LogOff", "Home")
 }
+

@@ -1,7 +1,7 @@
 using System.Web.Mvc;
+using Castle.Core.Internal;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.Models;
-using DevExpress.Web.Mvc;
 
 namespace DevExpressDemo.Controllers
 {
@@ -17,40 +17,32 @@ namespace DevExpressDemo.Controllers
         public ActionResult Index()
         {
             // DXCOMMENT: Pass a data model for GridView
-            //return View(NorthwindDataProvider.GetCustomers());
             return View(new UserModel());
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult LogIn(string userName,string password)
+        public ActionResult LogIn(UserModel user)
         {
-            ViewBag["message"] = _userLogic.Login(userName,password);
-
-            return RedirectToAction("Index", ViewBag["message"] == null ? "Employee" : "Home");
-        }
-
-        [HttpPost,ValidateInput(false)]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Register()
-        {
-            return View(new UserModel());
-        }
-
-        [HttpPost, ValidateInput(false)]
-        //[ValidateAntiForgeryToken]
-        public ActionResult Register(UserModel user)
-        {
-            //&& CaptchaExtension.GetIsValid("captcha")
             if (ModelState.IsValid)
             {
-                ViewBag.SuccessValidation = true;
-                
+                var result = _userLogic.Login(user?.ToLogicModel());
+                if (result.IsNullOrEmpty())
+                {
+                    ViewBag.ErrMessage = "You user name or password is wrong ! ";
+                    return View("Index", user);
+                }
+
+                if (user != null) Session["userName"] = user.UserName;
             }
 
-            ViewBag["message"] = _userLogic.Create(user?.ToLogicModel());
-            return RedirectToAction(ViewBag["message"] == null ? "Index" : "Register", "Home");
+            return RedirectToAction("Index", "Employee");
         }
 
+        public ActionResult LogOff()
+        {
+            Session["userName"] = null;
+            return Redirect("/");
+        }
     }
 }
 
