@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>demo1</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!--<script type="javascript" src="js/jquery.min.js"></script>-->
+    <!--<script type="javascript" src="js/jquery-1.12.4.js"></script>-->
+    <!--<script type="javascript" src="js/jquery-ui.js"></script>-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        div#droppable {
+            background: #eee;
+            /*width: 800px;*/
+            /*height: 500px;*/
+            /*float: right;*/
+            /*margin-top:-100px;*/
+        }
+
+        .draggable img {
+            width: 40px;
+            height: 40px;
+        }
+        /*.ui-draggable-dragging {*/
+            /*width: 40px;*/
+            /*height: 40px;*/
+        /*}*/
+    </style>
+    <script type="javascript">
+        $(function() {
+            var makeDraggable = function(element) {
+                element.draggable({
+                    revert: "invalid",
+                    appendTo: "#droppable",
+                    helper: "clone",
+                    containment: "#droppable",
+                    scroll: false
+                });
+
+                //element.draggable({ containment: "#droppable", scroll: false });
+
+                element.bind('dragstop', function(event, ui) {
+                    //console.log(ui);
+                    var newClone = $(ui.helper).clone();
+                    //console.log(newClone.prevObject);
+                    //var result=newClone.prevObject.remove();
+                    //console.log(newClone);
+                    makeDraggable(newClone);
+                    $(this).after(newClone);
+
+                    //newClone.prevObject.remove();
+                    //removeDraggable(newClone);
+                    //alert($('.square').size());
+
+                });
+            }
+
+            var removeDraggable=function (element) {
+                element.draggable({
+                    revert: "invalid",
+                    appendTo: "#droppable",
+                    helper: "clone",
+                    containment: "#droppable",
+                    scroll: false
+                });
+
+
+                //element.draggable({ containment: "#droppable", scroll: false });
+
+                element.bind('dragstop', function(event, ui) {
+                    var newClone = $(ui.helper);
+                    $(this).after(newClone.prevObject.clean());
+
+
+//                    var newClone = $(ui.helper).clone();
+//                    console.log(newClone);
+//                    var result=newClone.prevObject.remove();
+//                    console.log(result);
+//                    console.log(newClone);
+//                    $(this).after(newClone);
+                });
+            }
+
+            makeDraggable($(".draggable img"));
+            makeDraggable($(".draggable .square"));
+            makeDraggable($(".draggable .rectangle"));
+            makeDraggable($(".draggable .circle"));
+
+            $( "#droppable" ).droppable({
+                activeClass: "ui-state-default",
+                hoverClass: "ui-state-hover"
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+<div>
+    <div id="draggable" class="draggable">
+        <div id="square" class="square"></div>
+        <div id="rectangle" class="rectangle" ></div>
+        <div id="circle" class="circle"></div>
+        <!--<img src="http://www.edgesportscenter.com/images/fort-collins-soccer-league-at-edge-sports.png" alt="">-->
+    </div>
+
+    <div id="droppable">
+    </div>
+</div>
+
+</body>
+</html>
