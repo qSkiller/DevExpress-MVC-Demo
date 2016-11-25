@@ -2,113 +2,86 @@
 <html>
 <head>
     <title>demo</title>
-
     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="js/jquery.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript">
-        //var finalValue=false;
+        $(function () {
+            var makeDraggable = function (element) {
+                element.draggable({
+                    revert: "invalid",
+                    appendTo: "#droppable",
+                    helper: "clone",
+                    containment: "#droppable",
+                    scroll: false
+                });
+                element.bind('dragstop', function (event, ui) {
+                    var newClone = $(ui.helper).clone();
+                    makeDraggable(newClone);
+                    $(this).after(newClone);
+                    //alert($('img').size());
+                });
+            }
+            //makeDraggable($(".draggable img"));
+            makeDraggable($(".draggable #square"));
+            makeDraggable($(".draggable #rectangle"));
+            makeDraggable($(".draggable #circle"));
 
-        function allowDrop(ev) {
-            ev.preventDefault();
-        }
-
-        function drag(ev) {
-            var elementId=ev.target.id;
-            console.log(ev.target.id+document);
-            ev.dataTransfer.setData("Text", elementId);
-
-            var dragging = false;
-            var iX, iY;
-            $("#"+elementId).mousedown(function (e) {
-                dragging = true;
-                iX = e.clientX - this.offsetLeft;
-                iY = e.clientY - this.offsetTop;
-                console.log('mouse down '+iX+'--'+iY);
-                this.setCapture && this.setCapture();
-
-                return false;
+            $("#droppable").droppable({
+                //activeClass: "ui-state-default",
+                //hoverClass: "ui-state-hover"
             });
+        });
 
-            document.onmousemove = function (e) {
-                if (dragging) {
-                    var e = e || window.event;
-                    var oX = e.clientX - iX;
-                    var oY = e.clientY - iY;
-                    console.log('on mouse move '+oX+'--'+oY);
-                    $("#"+elementId).css({"margin-left": oX + "px", "margin-top": oY + "px"});
+        $(function () {
+            $(".square.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+            $(".rectangle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+            $(".circle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+        });
 
-                    return false;
+        function save() {
+            //console.log($("#draggable .square.ui-draggable-dragging"));
+            //console.log($("#draggable .rectangle.ui-draggable-dragging"));
+            //console.log($("#draggable .circle.ui-draggable-dragging"));
+
+            var demos = [];
+            var demo = {className: '', position: ''};
+            var elements = $("#draggable .ui-draggable-dragging");
+
+            console.log(elements);
+
+            if (elements.length > 0) {
+                for (var i = 0; i < elements.length; i++) {
+                    //console.log(elements[i].className);
+                    //console.log(elements[i].style.cssText);
+
+                    demo.className = elements[i].className;
+                    demo.position = elements[i].style.cssText;
+                    demos.push(demo);
                 }
-            };
+            }
 
-            $(document).mouseup(function (e) {
-                dragging = false;
-                console.log('mouse up '+$("#"+e.target.id)[0]+'--'+e.clientX+'--'+e.clientY+e.target.id);
-                $("#"+e.target.id)[0].releaseCapture();
-                e.cancelBubble = true;
-            })
+            console.log(demos);
+            // $("#draggable .square.ui-draggable-dragging").each(function(square){
+            // 	console.log(square.className);
+            // 	console.log(square.style);
 
-            //console.log(finalValue);
-
+            // });
         }
-
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("Text");
-            ev.target.appendChild(document.getElementById(data));
-            //finalValue=true;
-        }
-
     </script>
-
-    <script type="text/javascript">
-        //        var c= document.getElementById("myCanvas");
-        //        var cxt=c.getContext("2d");
-        //        cxt.fillStyle="#FF0000";
-        //        cxt.fillRect(0,0,150,75);
-    </script>
-    <!--<script>-->
-        <!--function draw21(id) {-->
-            <!--var canvas = document.getElementById(id);-->
-            <!--if (canvas == null)-->
-                <!--return false;-->
-            <!--var context = canvas.getContext("2d");-->
-            <!--//实践表明在不设施fillStyle下的默认fillStyle=black-->
-            <!--context.fillRect(0, 0, 100, 100);-->
-            <!--//实践表明在不设施strokeStyle下的默认strokeStyle=black-->
-            <!--context.strokeRect(120, 0, 100, 100);-->
-
-            <!--//设置纯色-->
-            <!--context.fillStyle = "red";-->
-            <!--context.strokeStyle = "blue";-->
-            <!--context.fillRect(0, 120, 100, 100);-->
-            <!--context.strokeRect(120, 120, 100, 100);-->
-
-            <!--//设置透明度实践证明透明度值>0,<1值越低，越透明，值>=1时为纯色，值<=0时为完全透明-->
-            <!--context.fillStyle = "rgba(255,0,0,0.2)";-->
-            <!--context.strokeStyle = "rgba(255,0,0,0.2)";-->
-            <!--context.fillRect(240, 0, 100, 100);-->
-            <!--context.strokeRect(240, 120, 100, 100);-->
-        <!--}-->
-    <!--</script>-->
 </head>
 <body>
-<div>
-    <h1>Demos</h1>
+<h4>This is a draggable image page</h4>
+<div id="draggable" class="draggable">
+    <div id="square" class="square"></div>
+    <div id="rectangle" class="rectangle"></div>
+    <div id="circle" class="circle"></div>
+</div>
+
+<div id="droppable">
 </div>
 <div>
-    <div id="draggable" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <div id="square" class="square" draggable="true" ondragstart="drag(event)"></div>
-        <div id="rectangle" class="rectangle" draggable="true" ondragstart="drag(event)"></div>
-        <div id="circle" class="circle" draggable="true" ondragstart="drag(event)"></div>
-    </div>
-    <div id="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <!--<canvas id="myCanvas" width="600" height="500" >-->
-
-        <!--</canvas>-->
-    </div>
-
-
+    <button onclick="save()">Click</button>
 </div>
 
 </body>

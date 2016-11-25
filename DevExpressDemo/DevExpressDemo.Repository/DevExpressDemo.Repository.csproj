@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="ShapeRepository.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="Installer\RepositoryInstaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

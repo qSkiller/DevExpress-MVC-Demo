@@ -1,0 +1,243 @@
+﻿@*@model DevExpressDemo.Models.ShapeModel
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2>Index</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>ShapeModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShapeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ShapeId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ShapeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShapeInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ShapeInfo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ShapeInfo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style type="text/css">
+    #draggable {
+        float: left;
+        width: 10%;
+        height: 500px;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #aaaaaa;
+        text-align: center;
+    }
+
+        #draggable div {
+            margin: 10px auto;
+        }
+
+    #droppable {
+        float: left;
+        width: 80%;
+        height: 500px;
+        margin: 10px;
+        border: 1px solid #aaaaaa;
+    }
+
+
+    .square {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #000;
+        z-index: 99;
+        background-color: #bebebe;
+    }
+
+    .rectangle {
+        width: 100px;
+        height: 50px;
+        border: 1px solid #000;
+        z-index: 99;
+        background-color: #aefeae;
+    }
+
+    .circle {
+        width: 100px;
+        height: 100px;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        border-radius: 50px;
+        border: 1px solid #000;
+        z-index: 99;
+        background-color: #defeef;
+    }
+
+    div#droppable {
+        /*width: 250px;
+            height: 200px;
+            float: right;
+            margin-top:-100px;*/
+        background: #eee;
+    }
+
+    .draggable img {
+        width: 40px;
+        height: 40px;
+    }
+    /*.ui-draggable-dragging {
+            width: 40px;
+            height: 40px;
+        }*/
+</style>
+<script type="text/javascript">
+    var shapeInit;
+
+    $(function() {
+        var makeDraggable = function(element) {
+            element.draggable({
+                revert: "invalid",
+                appendTo: "#droppable",
+                helper: "clone",
+                containment: "#droppable",
+                scroll: false,
+                start: function() {
+                    //console.log('start');
+                },
+                drag: function() {
+                    //console.log('drag');
+                },
+                stop: function() {
+                    //console.log('stop');
+                }
+            });
+            element.bind('dragstop', function(event, ui) {
+                var newClone = $(ui.helper).clone();
+                makeDraggable(newClone);
+                $(this).after(newClone);
+                //alert($('img').size());
+            });
+        }
+        //makeDraggable($(".draggable img"));
+        makeDraggable($(".draggable #square"));
+        makeDraggable($(".draggable #rectangle"));
+        makeDraggable($(".draggable #circle"));
+
+
+        $( "#droppable" ).droppable({
+            activeClass: "ui-state-default",
+            hoverClass: "ui-state-hover"
+        });
+    });
+
+    $(function() {
+        $.ajax({
+            type: "GET", //提交数据的类型 分为POST和GET
+            async: false,
+            url: "/Shape/ShapeGetAll",  //提交url 注意url必须小写
+            success: function (data) {
+                if (data) {
+                    shapeInit = data;
+                }
+
+                console.log(JSON.parse(shapeInit[0].ShapeInfo));
+                console.log(eval(shapeInit[0].ShapeInfo));
+
+                //var jsondata = eval(data);
+                //var jsData = (new Function("", "return " + data))();
+                //$('#dg').datagrid('loadData', data);
+            }
+        });
+    });
+
+    // $(function(){
+    // 	$(".square.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+    // 	$(".rectangle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+    // 	$(".circle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+    // });
+
+    function save(){
+        //console.log($("#draggable .square.ui-draggable-dragging"));
+        //console.log($("#draggable .rectangle.ui-draggable-dragging"));
+        //console.log($("#draggable .circle.ui-draggable-dragging"));
+
+        var shapes=[];
+        var shape={className:'',position:''};
+        var elements=$("#draggable .ui-draggable-dragging");
+
+        console.log(elements);
+
+        if(elements.length>0){
+            for(var i=0;i<elements.length;i++){
+                //console.log(elements[i].className);
+                //console.log(elements[i].style.cssText);
+                shape.className = elements[i].className;
+                shape.position = elements[i].style.cssText;
+                shapes.push(shape);
+            }
+        }
+
+        console.log(window.JSON.stringify(shapes));
+        // $("#draggable .square.ui-draggable-dragging").each(function(square){
+        // 	console.log(square.className);
+        // 	console.log(square.style);
+
+        // });
+
+        var shapeSave = {
+            ShapeId: shapeInit[0].ShapeId,
+            ShapeInfo: window.JSON.stringify(shapes)
+        }
+
+        $.ajax({
+            type: "POST", //提交数据的类型 分为POST和GET
+            async: false,
+            url: "/Shape/ShapeCreate",  //提交url 注意url必须小写
+            data: { "shape": shapeSave },
+            success: function () {
+                console.log('ok');
+                //var jsondata = eval(data);
+                //var jsData = (new Function("", "return " + data))();
+                //$('#dg').datagrid('loadData', data);
+            }
+        });
+
+        //return;
+    }
+</script>
+
+<h4>This is a draggable image page</h4>
+<div id="draggable" class="draggable">
+    <div id="square" class="square"></div>
+    <div id="rectangle" class="rectangle"></div>
+    <div id="circle" class="circle"></div>
+</div>
+
+<div id="droppable">
+</div>
+<div>
+    <button onclick="save()">Click</button>
+</div>

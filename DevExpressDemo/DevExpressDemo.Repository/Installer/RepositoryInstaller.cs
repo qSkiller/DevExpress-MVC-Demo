@@ -17,7 +17,8 @@ namespace DevExpressDemo.Repository.Installer
                 Component.For<IDbFactory>().ImplementedBy<DataBaseFactory>().LifestyleSingleton(),
                 Component.For<DevExpressDemoContext>().LifestylePerWebRequest(),
                 Component.For<IUserRepository>().ImplementedBy<UserRepository>().LifestyleSingleton(),
-                Component.For<IEmployeeRepository>().ImplementedBy<EmployeeRepository>().LifestyleSingleton()
+                Component.For<IEmployeeRepository>().ImplementedBy<EmployeeRepository>().LifestyleSingleton(),
+                Component.For<IShapeRepository>().ImplementedBy<ShapeRepository>().LifestyleSingleton()
                 );
         }
     }

@@ -49,5 +49,23 @@ namespace DevExpressDemo.Models
                 EmployeeOpus = employee.EmployeeOpus
             };
         }
+
+        public static ShapeLogicModel ToLogicModel(this ShapeModel shape)
+        {
+            return shape == null ? null : new ShapeLogicModel
+            {
+                ShapeId = shape.ShapeId,
+                ShapeInfo = shape.ShapeInfo
+            };
+        }
+
+        public static ShapeModel ToViewModel(this ShapeLogicModel shape)
+        {
+            return shape == null ? null : new ShapeModel
+            {
+                ShapeId = shape.ShapeId,
+                ShapeInfo = shape.ShapeInfo
+            }; 
+        }
     }
 }

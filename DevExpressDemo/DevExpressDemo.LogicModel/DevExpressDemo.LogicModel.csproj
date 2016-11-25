@@ -43,6 +43,7 @@
     <Compile Include="ConvertModel.cs" />
     <Compile Include="EmployeeLogicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShapeLogicModel.cs" />
     <Compile Include="UserLogicModel.cs" />
   </ItemGroup>
   <ItemGroup>

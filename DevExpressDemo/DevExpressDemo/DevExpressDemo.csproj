@@ -285,6 +285,7 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Employee\EmployeePartialView.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Shape\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -303,6 +304,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ShapeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -320,6 +322,7 @@
       <DependentUpon>Northwind.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\NorthwindDataProvider.cs" />
+    <Compile Include="Models\ShapeModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

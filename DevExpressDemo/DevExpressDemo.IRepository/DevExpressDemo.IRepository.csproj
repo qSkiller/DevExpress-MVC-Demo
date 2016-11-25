@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="IEmployeeRepository.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="IShapeRepository.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

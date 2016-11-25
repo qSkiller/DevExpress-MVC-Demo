@@ -9,11 +9,12 @@ namespace DevExpressDemo.Data
     {
         public DevExpressDemoContext() : base("name=DevExpressDemoContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DevExpressDemoContext,Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DevExpressDemoContext, Configuration>());
         }
 
-        public DbSet<User> Users { set; get; }
-        public DbSet<Employee> Employees { set; get; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Shape> Shapes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

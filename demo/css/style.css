@@ -18,6 +18,7 @@
     height: 500px;
     margin: 10px;
     border: 1px solid #aaaaaa;
+    background: #eee;
 }
 
 
@@ -26,6 +27,7 @@
     height: 100px;
     border:1px solid #000;
     z-index: 99;
+    background-color:#bebebe;
 }
 
 .rectangle {
@@ -33,6 +35,7 @@
     height: 50px;
     border:1px solid #000;
     z-index: 99;
+    background-color:#aefeae;
 }
 
 .circle {
@@ -43,4 +46,10 @@
     border-radius: 50px;
     border:1px solid #000;
     z-index: 99;
+    background-color:#defeef;
+}
+
+.draggable img {
+    width: 40px;
+    height: 40px;
 }

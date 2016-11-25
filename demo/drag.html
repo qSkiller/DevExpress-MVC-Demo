@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style type="text/css">
+div{float:left; width:100px; height:350px; margin:10px;padding:10px;border:1px solid #aaaaaa;position: relative;overflow: hidden;}
+#drag1{display:inline-block;padding:5px;background-color:red;color:#fff;position: absolute}
+</style>
+</head>
+
+<body>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+	<span draggable="true" ondragstart="drag(event)" id="drag1">qwer4321</span>
+</div>
+
+<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<script type="text/javascript">
+	var dragDiv = document.getElementById("drag1");
+	var x,y,id;
+	//dragover
+	function allowDrop(ev){
+		ev.preventDefault();
+        x = ev.offsetX;
+        y = ev.offsetY;
+        //drag事件最后一刻，无法读取鼠标的坐标，pageX和pageY都变为0
+        if(x == 0 && y == 0){
+            return; //不处理拖动最后一刻X和Y都为0的情形
+        }
+        x -= offsetX;
+        y -= offsetY;
+	}
+	//dragstart
+	function drag(ev){
+		offsetX = ev.offsetX;
+        offsetY = ev.offsetY;
+        //获取拖动开始时当前元素属于哪个容器
+        id = dragDiv.parentNode.id;
+		ev.dataTransfer.setData("Text",ev.target.id);
+	}
+	//dragend
+	function drop(ev){
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("Text");
+		if(id == "div1" && ev.target.id == "div1"){
+			return;
+		}else if(id == "div2" && ev.target.id == "div2"){	 
+			dragDiv.style.left = x + 'px';
+			dragDiv.style.top = y + 'px';
+		}else if(ev.target.id == "drag1"){
+			return;
+		}else{
+	        dragDiv.style.left = 'auto';
+	        dragDiv.style.top = 'auto';
+			ev.target.appendChild(document.getElementById(data));
+		}
+	}
+</script>
+</body>
+</html>

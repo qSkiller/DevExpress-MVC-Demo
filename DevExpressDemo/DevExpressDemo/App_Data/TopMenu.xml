@@ -2,5 +2,5 @@
 <items>
   <item Text="Home" NavigateUrl="/" />
   <item Text="Employees" NavigateUrl="employee"  />
-  <item Text="Products" NavigateUrl="#"  />
+  <item Text="Shapes" NavigateUrl="shape"  />
 </items>

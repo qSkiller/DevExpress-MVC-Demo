@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>hello</title>
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> -->
+  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  	<style type="text/css">
+	  	#draggable {
+		    float: left;
+		    width: 10%;
+		    height: 500px;
+		    margin: 10px;
+		    padding: 10px;
+		    border: 1px solid #aaaaaa;
+		    text-align: center;
+		}
+
+		#draggable div {
+		    margin: 10px auto;
+		}
+
+		#droppable {
+		    float: left;
+		    width: 80%;
+		    height: 500px;
+		    margin: 10px;
+		    border: 1px solid #aaaaaa;
+		}
+
+
+		.square {
+		    width: 100px;
+		    height: 100px;
+		    border:1px solid #000;
+		    z-index: 99;
+		    background-color:#bebebe;
+		}
+
+		.rectangle {
+		    width: 100px;
+		    height: 50px;
+		    border:1px solid #000;
+		    z-index: 99;
+		    background-color:#aefeae;
+		}
+
+		.circle {
+		    width: 100px;
+		    height: 100px;
+		    -moz-border-radius: 50px;
+		    -webkit-border-radius: 50px;
+		    border-radius: 50px;
+		    border:1px solid #000;
+		    z-index: 99;
+		    background-color:#defeef;
+		}
+
+  		div#droppable {
+			/*width: 250px;
+			height: 200px;
+			float: right;
+	        margin-top:-100px;*/
+			background: #eee;
+		}
+
+		.draggable img {
+			width: 40px;
+			height: 40px;
+		}
+		/*.ui-draggable-dragging {
+			width: 40px;
+			height: 40px;
+		}*/
+  	</style>
+  	<script type="text/javascript">
+  		$(function() {
+		    var makeDraggable = function(element) {
+		        element.draggable({ 
+			    	revert: "invalid",
+			    	appendTo: "#droppable",
+			    	helper: "clone",
+			    	containment: "#droppable",
+                    scroll: false,
+                    start: function() {
+				        console.log('start');
+				      },
+				      drag: function() {
+				        console.log('drag');
+				      },
+				      stop: function() {
+				        console.log('stop');
+				      }
+			    });
+		        element.bind('dragstop', function(event, ui) {
+		            var newClone = $(ui.helper).clone();
+		            makeDraggable(newClone);
+		            $(this).after(newClone);
+		            //alert($('img').size());
+		        });
+		    }
+			//makeDraggable($(".draggable img"));
+			makeDraggable($(".draggable #square"));
+			makeDraggable($(".draggable #rectangle"));
+			makeDraggable($(".draggable #circle"));
+
+
+			$( "#droppable" ).droppable({
+		        activeClass: "ui-state-default",
+		        hoverClass: "ui-state-hover"
+			});
+		});
+
+		// $(function(){
+		// 	$(".square.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+		// 	$(".rectangle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
+		// 	$(".circle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();			
+		// });
+
+		function save(){
+			//console.log($("#draggable .square.ui-draggable-dragging"));
+			//console.log($("#draggable .rectangle.ui-draggable-dragging"));
+			//console.log($("#draggable .circle.ui-draggable-dragging"));
+
+			var demos=[];
+			var demo={className:'',position:''};
+			var elements=$("#draggable .ui-draggable-dragging");
+
+			console.log(elements);
+
+			if(elements.length>0){
+				for(var i=0;i<elements.length;i++){
+					//console.log(elements[i].className);
+				 	//console.log(elements[i].style.cssText);
+
+					demo.className=elements[i].className;
+					demo.position=elements[i].style.cssText;
+					demos.push(demo);
+				}
+			}
+
+			console.log(demos);
+			console.log(window.JSON.stringify(demos));
+			// $("#draggable .square.ui-draggable-dragging").each(function(square){
+			// 	console.log(square.className);
+			// 	console.log(square.style);
+
+			// });
+		}
+  	</script>
+
+
+  	<!-- <script type="text/javascript">
+	window.onload=function(){
+	  var obox=document.getElementById("droppable");
+	  var odrag=document.getElementsByClassName("cirle");
+	  var isDrag=false;
+	  var x,y;
+	   
+	  odrag.onmousedown=down;
+	  document.onmousemove=move;
+	  document.onmouseup=up;
+	   
+	  function down(ev){
+	    var ev=window.event||ev;
+	    x=ev.clientX-this.offsetLeft;
+	    y=ev.clientY-this.offsetTop;
+	    this.style.cursor="move"; 
+	    isDrag=true;
+	  }
+	  function move(ev){
+	    if(isDrag){
+	     var ev=window.event||ev;
+	      odrag.style.left=(ev.clientX-x)+"px";
+	      odrag.style.top=(ev.clientY-x)+"px";
+	      if(parseInt(odrag.style.left)<0){
+	        odrag.style.left=0;
+	      }
+	      if(parseInt(odrag.style.top)<0){
+	        odrag.style.top=0;
+	      }
+	      if(parseInt(odrag.style.left)>obox.clientWidth-odrag.clientWidth){
+	        odrag.style.left=(obox.clientWidth-odrag.clientWidth)+"px";
+	      }
+	      if(parseInt(odrag.style.top)>obox.clientHeight-odrag.clientHeight){
+	         odrag.style.top=(obox.clientHeight-odrag.clientHeight)+"px";
+	      }
+	    }
+	  }
+	  function up(){
+	    isDrag=false;
+	    odrag.style.cursor="pointer";
+	  }
+	}
+</script> -->
+</head>
+<body>
+	<h4>This is a draggable image page</h4>
+	<div id="draggable" class="draggable">
+		<div id="square" class="square"></div>
+        <div id="rectangle" class="rectangle" ></div>
+        <div id="circle" class="circle"></div>
+		<!-- <img src="http://www.edgesportscenter.com/images/fort-collins-soccer-league-at-edge-sports.png" alt=""> -->
+	</div>
+		
+	<div id="droppable">			
+	</div>
+	<div>
+		<button onclick="save()">Click</button>
+	</div>
+
+
+	<!-- <div>
+    	<div id="draggable" class="draggable">
+        <div id="square" class="square"></div>
+        <div id="rectangle" class="rectangle" ></div>
+        <div id="circle" class="circle"></div>
+        <img class="cirle" src="http://www.edgesportscenter.com/images/fort-collins-soccer-league-at-edge-sports.png" alt="">
+    </div>
+
+    <div id="droppable">
+    </div> -->
+</div>
+</body>
+</html>
