@@ -159,18 +159,22 @@
             async: false,
             url: "/Shape/ShapeGetAll",  //提交url 注意url必须小写
             success: function (data) {
-                if (data) {
+                if (data.length > 0) {
                     shapeInit = data;
                 }
-
-                console.log(JSON.parse(shapeInit[0].ShapeInfo));
+                //console.log(JSON.parse(shapeInit[0].ShapeInfo));
                 console.log(eval(shapeInit[0].ShapeInfo));
-
-                //var jsondata = eval(data);
-                //var jsData = (new Function("", "return " + data))();
-                //$('#dg').datagrid('loadData', data);
             }
         });
+
+        var str = '';
+        if (shapeInit && shapeInit[0] != null) {
+            $.each(eval(shapeInit[0].ShapeInfo), function (idx, obj) {
+                str = str + '<div class="' + obj.className + '" style="' + obj.position + '" ></div>';
+                //console.log(idx + '--' + obj.className + '--' + obj.position);
+            });
+            $("#draggable").append(str);
+        }
     });
 
     // $(function(){
@@ -185,18 +189,19 @@
         //console.log($("#draggable .circle.ui-draggable-dragging"));
 
         var shapes=[];
-        var shape={className:'',position:''};
         var elements=$("#draggable .ui-draggable-dragging");
 
         console.log(elements);
 
         if(elements.length>0){
-            for(var i=0;i<elements.length;i++){
-                //console.log(elements[i].className);
-                //console.log(elements[i].style.cssText);
+            for (var i = 0; i < elements.length; i++) {
+                var shape = { className: '', position: '' };                
                 shape.className = elements[i].className;
                 shape.position = elements[i].style.cssText;
                 shapes.push(shape);
+
+                //console.log(elements[i].className);
+                //console.log(elements[i].style.cssText);
             }
         }
 
@@ -206,10 +211,18 @@
         // 	console.log(square.style);
 
         // });
+        var shapeSave = {};
 
-        var shapeSave = {
-            ShapeId: shapeInit[0].ShapeId,
-            ShapeInfo: window.JSON.stringify(shapes)
+        if (shapeInit && shapeInit[0] != null) {
+            shapeSave = {
+                ShapeId: shapeInit[0].ShapeId,
+                ShapeInfo: window.JSON.stringify(shapes)
+            }
+        }
+        else {
+            shapeSave = {
+                ShapeInfo: window.JSON.stringify(shapes)
+            }
         }
 
         $.ajax({
@@ -219,17 +232,11 @@
             data: { "shape": shapeSave },
             success: function () {
                 console.log('ok');
-                //var jsondata = eval(data);
-                //var jsData = (new Function("", "return " + data))();
-                //$('#dg').datagrid('loadData', data);
             }
         });
-
-        //return;
     }
 </script>
 
-<h4>This is a draggable image page</h4>
 <div id="draggable" class="draggable">
     <div id="square" class="square"></div>
     <div id="rectangle" class="rectangle"></div>
