@@ -42,128 +42,23 @@
         @Html.ActionLink("Back to List", "Index")
     </div>*@
 
-
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<style type="text/css">
-    #draggable {
-        float: left;
-        width: 10%;
-        height: 500px;
-        margin: 10px;
-        padding: 10px;
-        border: 1px solid #aaaaaa;
-        text-align: center;
-    }
-
-        #draggable div {
-            margin: 10px auto;
-        }
-
-    #droppable {
-        float: left;
-        width: 80%;
-        height: 500px;
-        margin: 10px;
-        border: 1px solid #aaaaaa;
-    }
-
-
-    .square {
-        width: 100px;
-        height: 100px;
-        border: 1px solid #000;
-        z-index: 99;
-        background-color: #bebebe;
-    }
-
-    .rectangle {
-        width: 100px;
-        height: 50px;
-        border: 1px solid #000;
-        z-index: 99;
-        background-color: #aefeae;
-    }
-
-    .circle {
-        width: 100px;
-        height: 100px;
-        -moz-border-radius: 50px;
-        -webkit-border-radius: 50px;
-        border-radius: 50px;
-        border: 1px solid #000;
-        z-index: 99;
-        background-color: #defeef;
-    }
-
-    div#droppable {
-        /*width: 250px;
-            height: 200px;
-            float: right;
-            margin-top:-100px;*/
-        background: #eee;
-    }
-
-    .draggable img {
-        width: 40px;
-        height: 40px;
-    }
-    /*.ui-draggable-dragging {
-            width: 40px;
-            height: 40px;
-        }*/
-</style>
+<link href="@Url.Content("~/Content/Devexpress.css")" rel="stylesheet" />
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.12.4.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui.js")"></script>
 <script type="text/javascript">
     var shapeInit;
 
-    $(function() {
-        var makeDraggable = function(element) {
-            element.draggable({
-                revert: "invalid",
-                appendTo: "#droppable",
-                helper: "clone",
-                containment: "#droppable",
-                scroll: false,
-                start: function() {
-                    //console.log('start');
-                },
-                drag: function() {
-                    //console.log('drag');
-                },
-                stop: function() {
-                    //console.log('stop');
-                }
-            });
-            element.bind('dragstop', function(event, ui) {
-                var newClone = $(ui.helper).clone();
-                makeDraggable(newClone);
-                $(this).after(newClone);
-                //alert($('img').size());
-            });
-        }
-        //makeDraggable($(".draggable img"));
-        makeDraggable($(".draggable #square"));
-        makeDraggable($(".draggable #rectangle"));
-        makeDraggable($(".draggable #circle"));
-
-
-        $( "#droppable" ).droppable({
-            activeClass: "ui-state-default",
-            hoverClass: "ui-state-hover"
-        });
-    });
-
-    $(function() {
+    $(function () {
         $.ajax({
-            type: "GET", //提交数据的类型 分为POST和GET
+            type: "GET",
             async: false,
-            url: "/Shape/ShapeGetAll",  //提交url 注意url必须小写
+            url: "/Shape/ShapeGetAll",
             success: function (data) {
                 if (data.length > 0) {
                     shapeInit = data;
+                    //console.log(JSON.parse(shapeInit[0].ShapeInfo));
+                    //console.log(eval(shapeInit[0].ShapeInfo));
                 }
-                //console.log(JSON.parse(shapeInit[0].ShapeInfo));
-                console.log(eval(shapeInit[0].ShapeInfo));
             }
         });
 
@@ -171,69 +66,112 @@
         if (shapeInit && shapeInit[0] != null) {
             $.each(eval(shapeInit[0].ShapeInfo), function (idx, obj) {
                 str = str + '<div class="' + obj.className + '" style="' + obj.position + '" ></div>';
-                //console.log(idx + '--' + obj.className + '--' + obj.position);
             });
             $("#draggable").append(str);
         }
     });
 
-    // $(function(){
-    // 	$(".square.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
-    // 	$(".rectangle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
-    // 	$(".circle.ui-draggable.ui-draggable-handle.ui-draggable-dragging").draggable();
-    // });
+    $(function () {
+        var makeDraggable = function (element) {
+            element.draggable({
+                revert: "invalid",
+                appendTo: "#droppable",
+                helper: "clone",
+                containment: "#droppable",
+                scroll: false,
+                start: function () {
+                    //console.log('start');
+                },
+                drag: function () {
+                    //console.log('drag');
+                },
+                stop: function (event, ui) {
 
-    function save(){
-        //console.log($("#draggable .square.ui-draggable-dragging"));
-        //console.log($("#draggable .rectangle.ui-draggable-dragging"));
-        //console.log($("#draggable .circle.ui-draggable-dragging"));
+                    if (event.target.attributes.id == undefined) {
+                        $(event.target).remove();
+                        if (ui.offset.left > 1600 && ui.offset.top > 450) {
+                            //console.log(event);
+                            //console.log(parentElmment.children);
+                            //console.log('delete' + event.clientX + '---' + event.clientY);
+                            var parentElmment = document.getElementById("draggable");
+                            for (var i = 0; i < parentElmment.children.length; i++) {
+                                if (parentElmment.children[i].style.left.replace('px', '') > 1600 && parentElmment.children[i].style.top.replace('px', '') > 450) {
+                                    //parentElmment.children[i].style.backgroundColor = "red";
+                                    parentElmment.removeChild(parentElmment.children[i]);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
 
-        var shapes=[];
-        var elements=$("#draggable .ui-draggable-dragging");
+            element.bind('dragstop', function (event, ui) {
+                var newClone = $(ui.helper).clone();
+                makeDraggable(newClone);
+                $(this).after(newClone);
+            });
+        }
 
-        console.log(elements);
+        makeDraggable($("#draggable .square"));
+        makeDraggable($("#draggable .rectangle"));
+        makeDraggable($("#draggable .circle"));
 
-        if(elements.length>0){
+        $("#droppable").droppable({
+            activeClass: "ui-state-default",
+            hoverClass: "ui-state-hover"
+        });
+
+    });
+
+    function save() {
+        var shapes = [];
+        var shapeSave;
+        var elements = $("#draggable .ui-draggable-dragging");
+
+        if (elements.length > 0) {
             for (var i = 0; i < elements.length; i++) {
-                var shape = { className: '', position: '' };                
+                var shape = { className: '', position: '' };
                 shape.className = elements[i].className;
                 shape.position = elements[i].style.cssText;
                 shapes.push(shape);
-
-                //console.log(elements[i].className);
-                //console.log(elements[i].style.cssText);
             }
         }
 
-        console.log(window.JSON.stringify(shapes));
-        // $("#draggable .square.ui-draggable-dragging").each(function(square){
-        // 	console.log(square.className);
-        // 	console.log(square.style);
-
-        // });
-        var shapeSave = {};
+        if (shapes.length === 0) {
+            return;
+        }
 
         if (shapeInit && shapeInit[0] != null) {
             shapeSave = {
                 ShapeId: shapeInit[0].ShapeId,
                 ShapeInfo: window.JSON.stringify(shapes)
             }
+
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/Shape/ShapeEdit",
+                data: { "shape": shapeSave },
+                success: function () {
+                    console.log('Edit ok');
+                }
+            });
         }
         else {
             shapeSave = {
                 ShapeInfo: window.JSON.stringify(shapes)
             }
-        }
 
-        $.ajax({
-            type: "POST", //提交数据的类型 分为POST和GET
-            async: false,
-            url: "/Shape/ShapeCreate",  //提交url 注意url必须小写
-            data: { "shape": shapeSave },
-            success: function () {
-                console.log('ok');
-            }
-        });
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/Shape/ShapeCreate",
+                data: { "shape": shapeSave },
+                success: function () {
+                    console.log('Create ok');
+                }
+            });
+        }
     }
 </script>
 
@@ -244,7 +182,10 @@
 </div>
 
 <div id="droppable">
+    <div id="dustbin">
+        <img src="@Url.Content("~/Content/Images/dustbin.png")" alt="" />
+    </div>
 </div>
 <div>
-    <button onclick="save()">Click</button>
+    <button onclick="save()">Submit</button>
 </div>

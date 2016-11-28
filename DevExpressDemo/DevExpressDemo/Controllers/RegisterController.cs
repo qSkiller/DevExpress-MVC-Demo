@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using Castle.Core.Internal;
-using DevExpress.Web.Mvc;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.Models;
 

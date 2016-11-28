@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.Models;
@@ -32,21 +29,25 @@ namespace DevExpressDemo.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult ShapeCreate(ShapeModel shape)
         {
-            if (_shapeLogic.GetAll().ToList().Count > 0)
-            {
-                _shapeLogic.Edit(shape?.ToLogicModel());
-            }
-            else
+            var result = _shapeLogic.GetAll().ToList().Count;
+
+            if (result == 0)
             {
                 _shapeLogic.Create(shape?.ToLogicModel());
             }
 
             return View("Index");
-
-            //return RedirectToAction("Index", "Shape");
         }
 
-        
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ShapeEdit(ShapeModel shape)
+        {
+            _shapeLogic.Edit(shape?.ToLogicModel());
+
+            return View("Index");
+        }
+
+
         public JsonResult ShapeGetAll()
         {
             var data = _shapeLogic.GetAll();
