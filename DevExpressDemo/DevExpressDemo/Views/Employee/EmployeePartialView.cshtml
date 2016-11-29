@@ -38,16 +38,39 @@
 
 
         //Setting option employee
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
-        settings.CommandColumn.ShowDeleteButton = true;
-        settings.CommandColumn.ShowEditButton = true;
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialCreate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialDelete" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialUpdate" };
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.Columns.Add(column =>
+        {
+            column.Caption = "#";
+            column.SetHeaderCaptionTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(Html.ActionLink("New", "EmployeeCreate"));
+            });
+
+            column.SetDataItemTemplateContent(c =>
+            {
+                ViewContext.Writer.Write(
+                    Html.ActionLink("Edit", "EmployeeEdit", new { employeeId = DataBinder.Eval(c.DataItem, "EmployeeId") }) + "&nbsp; &nbsp;" +
+                    Html.ActionLink("Delete", "EmployeePartialDelete", new { employeeId = DataBinder.Eval(c.DataItem, "EmployeeId") },
+                        new { onclick = "return confirm(' Do you really want to delete this record?')" }));
+            });
+
+            column.Settings.AllowDragDrop = DefaultBoolean.False;
+            column.Settings.AllowSort = DefaultBoolean.False;
+            column.Width = 200;
+
+        });
+
+        //settings.CommandColumn.Visible = true;
+        //settings.CommandColumn.ShowNewButton = true;
+        //settings.CommandColumn.ShowDeleteButton = true;
+        //settings.CommandColumn.ShowEditButton = true;
+
+        //settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialCreate" };
+        //settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialDelete" };
+        //settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Employee", Action = "EmployeePartialUpdate" };
+        //settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        //settings.SettingsBehavior.ConfirmDelete = true;
 
 
         // DXCOMMENT: Specify the grid's key field name and define grid columns in accordance with data model fields

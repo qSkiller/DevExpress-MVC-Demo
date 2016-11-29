@@ -290,6 +290,10 @@
     <Content Include="Views\Employee\EmployeePartialView.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Shape\Index.cshtml" />
+    <Content Include="Views\Department\Index.cshtml" />
+    <Content Include="Views\Department\DepartmentPartialView.cshtml" />
+    <Content Include="Views\Employee\EmployeeCreate.cshtml" />
+    <Content Include="Views\Employee\EmployeeEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -304,6 +308,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -317,6 +322,7 @@
     <Compile Include="Installer\WindsorBootstrapper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ConvertModel.cs" />
+    <Compile Include="Models\DepartmentModel.cs" />
     <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

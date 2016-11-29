@@ -1,0 +1,50 @@
+﻿@model System.Collections.IEnumerable
+
+@Html.Action("DepartmentPartialView", "Department")
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DepId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OfficeLocation)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeLocation)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
+                @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
+                @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})
+            </td>
+        </tr>
+    }
+
+</table>*@
+
+

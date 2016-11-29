@@ -11,6 +11,7 @@ namespace DevExpressDemo.Logic.Installer
         {
             container.Register(
                 Component.For<IUserLogic>().ImplementedBy<UserLogic>().LifestylePerWebRequest(),
+                Component.For<IDepartmentLogic>().ImplementedBy<DepartmentLogic>().LifestylePerWebRequest(),
                 Component.For<IEmployeeLogic>().ImplementedBy<EmployeeLogic>().LifestylePerWebRequest(),
                 Component.For<IShapeLogic>().ImplementedBy<ShapeLogic>().LifestylePerWebRequest()
                 );

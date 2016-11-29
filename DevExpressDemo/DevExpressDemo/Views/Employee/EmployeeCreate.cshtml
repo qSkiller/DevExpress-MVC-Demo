@@ -1,0 +1,128 @@
+﻿@model DevExpressDemo.Models.EmployeeModel
+
+@{
+    ViewBag.Title = "EmployeeCreate";
+}
+
+<h2>EmployeeCreate</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "jQueryValidationFormLayout";
+    settings.Style.Add("float", "left");
+    settings.Items.Add(model => model.EmployeeName, itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        //CommonDemoHelper.FormLayoutItemSettingsMethod(itemSettings);
+        TextBoxSettings textBoxSettings = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        textBoxSettings.Properties.ValidationSettings.Display = Display.None;
+    });
+    //settings.Items.Add(model => model.Publisher, itemSettings =>
+    //{
+    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+    //    itemSettings.HelpText = "Must be under 10 characters";
+    //    CommonDemoHelper.FormLayoutItemSettingsMethod(itemSettings);
+    //    TextBoxSettings textBoxSettings = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+    //    textBoxSettings.Properties.ValidationSettings.Display = Display.None;
+    //});
+    //settings.Items.Add(model => model.ReleaseDate, itemSettings =>
+    //{
+    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+    //    itemSettings.HelpText = "Cannot be earlier than today";
+    //    CommonDemoHelper.FormLayoutItemSettingsMethod(itemSettings);
+    //    DateEditSettings dateEditSettings = (DateEditSettings)itemSettings.NestedExtensionSettings;
+    //    dateEditSettings.Properties.ValidationSettings.Display = Display.None;
+    //});
+    //settings.Items.Add(model => model.Annotation, itemSettings =>
+    //{
+    //    itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
+    //    CommonDemoHelper.FormLayoutItemSettingsMethod(itemSettings);
+    //    MemoSettings memoSettings = (MemoSettings)itemSettings.NestedExtensionSettings;
+    //    memoSettings.Properties.ValidationSettings.Display = Display.None;
+    //});
+    settings.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = string.Empty;
+        itemSettings.SetNestedContent(() =>
+        {
+            ViewContext.Writer.Write("<div class='line'>");
+            Html.DevExpress().Button(btnSettings =>
+            {
+                btnSettings.Name = "btnUpdate";
+                btnSettings.Text = "Send";
+                btnSettings.ControlStyle.CssClass = "button";
+                btnSettings.UseSubmitBehavior = true;
+            }).Render();
+            Html.DevExpress().Button(btnSettings =>
+            {
+                btnSettings.Name = "btnClear";
+                btnSettings.Text = "Clear";
+                btnSettings.ControlStyle.CssClass = "button";
+                btnSettings.ClientSideEvents.Click = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer(); }";
+            }).Render();
+            ViewContext.Writer.Write("</div>");
+        });
+    });
+}).GetHtml()
+    Html.DevExpress().ValidationSummary().GetHtml();
+    @*@Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>EmployeeModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeeName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmployeeName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmployeeName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeePhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmployeePhone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmployeePhone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeeAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmployeeAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmployeeAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeeEducation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmployeeEducation, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmployeeEducation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.EmployeeOpus, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmployeeOpus, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EmployeeOpus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

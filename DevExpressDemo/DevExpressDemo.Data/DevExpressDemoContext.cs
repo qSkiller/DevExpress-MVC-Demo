@@ -13,6 +13,7 @@ namespace DevExpressDemo.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Shape> Shapes { get; set; }
 

@@ -61,6 +61,7 @@
     <Compile Include="DevExpressDemoContext.cs" />
     <Compile Include="IDbFactory.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Shape.cs" />
     <Compile Include="Models\User.cs" />

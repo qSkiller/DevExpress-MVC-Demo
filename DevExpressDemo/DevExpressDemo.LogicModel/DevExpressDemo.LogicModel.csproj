@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConvertModel.cs" />
+    <Compile Include="DepartmentLogicModel.cs" />
     <Compile Include="EmployeeLogicModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShapeLogicModel.cs" />

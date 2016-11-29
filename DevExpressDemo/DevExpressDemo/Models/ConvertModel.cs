@@ -65,7 +65,29 @@ namespace DevExpressDemo.Models
             {
                 ShapeId = shape.ShapeId,
                 ShapeInfo = shape.ShapeInfo
-            }; 
+            };
+        }
+
+        public static DepartmentLogicModel ToLogicModel(this DepartmentModel department)
+        {
+            return department == null ? null : new DepartmentLogicModel
+            {
+                DepId = department.DepId,
+                DepNo = department.DepNo,
+                DepName = department.DepName,
+                OfficeLocation = department.OfficeLocation
+            };
+        }
+
+        public static DepartmentModel ToViewModel(this DepartmentLogicModel department)
+        {
+            return department == null ? null : new DepartmentModel
+            {
+                DepId = department.DepId,
+                DepNo = department.DepNo,
+                DepName = department.DepName,
+                OfficeLocation = department.OfficeLocation
+            };
         }
     }
 }

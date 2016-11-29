@@ -68,5 +68,41 @@ namespace DevExpressDemo.Controllers
 
             return RedirectToAction("Index", "Employee");
         }
+
+        
+        public ActionResult EmployeeCreate()
+        {
+            return View();
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EmployeeCreate(EmployeeModel employee)
+        {
+
+            return RedirectToAction("Index","Employee");
+        }
+
+        [HttpGet]
+        public ActionResult EmployeeEdit(int employeeId)
+        {
+            var editEmployee = _employeeLogic.Get(employeeId)?.ToViewModel();
+
+            if (editEmployee == null)
+            {
+                editEmployee = new EmployeeModel { EmployeeId = -1 };
+            }
+
+            ViewBag.Message = "Your application description page1111.";
+
+            return View(editEmployee);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult EmployeeEdit(EmployeeModel employee)
+        {
+
+
+            return RedirectToAction("Index", "Employee");
+        }
     }
 }

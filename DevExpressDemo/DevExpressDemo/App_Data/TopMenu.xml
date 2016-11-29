@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <items>
-  <item Text="Home" NavigateUrl="/" />
+  <!--<item Text="Home" NavigateUrl="/" />
   <item Text="Employees" NavigateUrl="employee"  />
-  <item Text="Shapes" NavigateUrl="shape"  />
+  <item Text="Shapes" NavigateUrl="shape"  />-->
 </items>

@@ -56,8 +56,9 @@
                     {
                         s.Width = 170;
                         s.ShowModelErrors = true;
-                        s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.Text;
+                        s.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithText;
                         s.Properties.ValidationSettings.Display = Display.Dynamic;
+                        
                         s.Properties.ValidationSettings.ErrorText = "*";
                     }).Render();
 
