@@ -76,10 +76,29 @@
         // DXCOMMENT: Specify the grid's key field name and define grid columns in accordance with data model fields
         settings.KeyFieldName = "EmployeeId";
         settings.Columns.Add("EmployeeName");
+        settings.Columns.Add("DepId");
+        settings.Columns.Add("EmployeeSex");
+        settings.Columns.Add(column =>
+        { //DataBinder.Eval(c.DataItem, "Change"))
+            column.FieldName = "EmployeeSex";
+            //column.
+            
+        });
+        settings.Columns.Add("EmployeeAge");
+        settings.Columns.Add("BirthDate").PropertiesEdit.DisplayFormatString = "yyyy-MM-dd";
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "BirthDate";
+            column.ColumnType=MVCxGridViewColumnType.DateEdit;
+            //column.Settings.AutoFilterCondition=AutoFilterCondition.Equals;
+        });
+
         settings.Columns.Add("EmployeePhone");
-        settings.Columns.Add("EmployeeAddress");
-        settings.Columns.Add("EmployeeEducation");
-        settings.Columns.Add("EmployeeOpus");
+        settings.Columns.Add("EmployeeEmail");
+        //settings.Columns.Add("EmployeeAddress");
+        //settings.Columns.Add("EmployeeEducation");
+        //settings.Columns.Add("EmployeeOpus");
 
         // Setting scroll bar
         //settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Visible;

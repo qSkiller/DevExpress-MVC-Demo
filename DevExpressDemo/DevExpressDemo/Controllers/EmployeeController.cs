@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using DevExpressDemo.ILogic;
 using DevExpressDemo.Models;
 
@@ -9,18 +11,21 @@ namespace DevExpressDemo.Controllers
         // GET: Employee
 
         private readonly IEmployeeLogic _employeeLogic;
+        private readonly IDepartmentLogic _departmentLogic;
 
-        public EmployeeController(IEmployeeLogic employeeLogic)
+        public EmployeeController(IEmployeeLogic employeeLogic, IDepartmentLogic departmentLogic)
         {
             _employeeLogic = employeeLogic;
+            _departmentLogic = departmentLogic;
         }
 
         public ActionResult Index()
         {
-            if (Session["userName"] == null)
-            {
-                return RedirectToAction("Index","Home");
-            }
+            //if (Session["userName"] == null)
+            //{
+            //    return RedirectToAction("Index","Home");
+            //}
+            //var result = _employeeLogic.GetAll() ? _employeeLogic.GetAll() : "";
             return View(_employeeLogic.GetAll());
         }
 
@@ -31,7 +36,7 @@ namespace DevExpressDemo.Controllers
             return PartialView("EmployeePartialView", _employeeLogic.GetAll());
         }
 
-        [HttpPost,ValidateInput(false)]
+        [HttpPost, ValidateInput(false)]
         public ActionResult EmployeePartialCreate(EmployeeModel employee)
         {
             //if (!ModelState.IsValid)
@@ -69,17 +74,26 @@ namespace DevExpressDemo.Controllers
             return RedirectToAction("Index", "Employee");
         }
 
-        
+
         public ActionResult EmployeeCreate()
         {
-            return View();
+            return View(new EmployeeViewModel
+            {
+                EmployeeModel = new EmployeeModel
+                {
+                    DepId = 1
+                },
+                DepartmentModels = _departmentLogic.GetAll().Select(x => x.ToViewModel())
+            });
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult EmployeeCreate(EmployeeModel employee)
+        public ActionResult EmployeeCreate(EmployeeViewModel employeeView)
         {
 
-            return RedirectToAction("Index","Employee");
+            _employeeLogic.Create(employeeView.EmployeeModel?.ToLogicModel());
+
+            return RedirectToAction("Index", "Employee");
         }
 
         [HttpGet]

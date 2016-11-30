@@ -1,15 +1,287 @@
-﻿@model DevExpressDemo.Models.EmployeeModel
+﻿@using System.Drawing
+@using DevExpress.Web.Mvc.Internal
+@using DevExpressDemo.Models
+@model DevExpressDemo.Models.EmployeeViewModel
 
 @{
     ViewBag.Title = "EmployeeCreate";
 }
 
+<link href="@Url.Content("~/Content/Devexpress.css")" rel="stylesheet"/>
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.validate.js")"></script>
+<script type="text/javascript">
+    $().ready(function() {
+        $("#jQueryValidationForm").validate({
+            showErrors: function (errorMap, errorList) {
+
+            },
+            rules: {
+                EmployeeName: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 10
+                },
+                DepId: {
+                
+                },
+                EmployeeSex: {
+                    required: true
+                },
+                EmployeeAge: {
+                    required: true
+                },
+                BirthDate: {
+                    required: true
+                },
+                EmployeePhone: {
+                    required: true
+                },
+                EmployeeEmail: {
+                    required: true
+                },
+                ReleaseDate: {
+                    required: true,
+                    @*remote: '@(Url.Action("DateTime", "Employee"))'
+                }
+            },
+            messages: {
+                EmployeeName: {
+                    required: "EmployeeName is required",
+                    range: "Must between 5 and 10 characters"
+                },
+                DepId: {
+                
+                },
+                EmployeeSex: {
+                    required: "EmployeeSex is required"
+                },
+                EmployeeAge: {
+                    required: "EmployeeAge is required",
+                    range: "Must between 18 and 100 years old"
+                },
+                BirthDate: {
+                    required: "BirthDate is required"
+                },
+                EmployeePhone: {
+                    required: "EmployeePhone is required"
+                },
+                EmployeeEmail: {
+                    required: "EmployeeEmail is required"
+                }
+            }
+        });
+    });
+</script>*@
+
+@*@{
+    Html.EnableClientValidation(false);
+    Html.EnableUnobtrusiveJavaScript(false);
+}*@
+
 <h2>EmployeeCreate</h2>
 
-
-@using (Html.BeginForm())
+@*@using (Html.BeginForm("EmployeeCreate","Employee",FormMethod.Post, new { id = "jQueryValidationForm", @class = "edit_form" }))*@
+@using (Html.BeginForm("EmployeeCreate", "Employee", FormMethod.Post))
 {
     @Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "EmployeeFormLatout";
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.UseDefaultPaddings = false;
+    settings.Styles.LayoutGroup.Cell.Paddings.Padding = Unit.Pixel(5);
+
+    settings.Items.Add( itemSettings =>
+    {
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.NestedExtension().Label(label =>
+        {
+            label.Name = "Employee Tips";
+            label.Text = "Fields marked with an asterisk (*) are required.";
+        });
+    });
+    //settings.Items.AddEmptyItem().Height = 20;
+    //settings.Items.Add(new EmptyLayoutItem {Height = 10});
+
+    settings.Items.Add(m => m.EmployeeModel.EmployeeName, itemSettings =>
+    {
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).ShowModelErrors = true;
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).AccessibilityCompliant = true;
+    });
+
+    settings.Items.Add(m => m.EmployeeModel.EmployeeSex, itemSettings =>
+    {
+        itemSettings.NestedExtension().RadioButtonList(radioButtonList =>
+        {
+            radioButtonList.AccessibilityCompliant = true;
+            radioButtonList.Properties.RepeatDirection = RepeatDirection.Horizontal;
+            radioButtonList.Properties.Items.Add("Male", 1);
+            radioButtonList.Properties.Items.Add("Female", 0);
+            radioButtonList.SelectedIndex = 0;
+            radioButtonList.ControlStyle.Border.BorderColor = Color.Beige;
+        });
+        //itemSettings.NestedExtension().RadioButton(radioButton =>
+        //{
+        //    radioButton.Properties.Caption = "Content";
+        //    radioButton.Checked = true;
+        //    //radioButton.ReadOnly = true;
+        //    radioButton.Text = "Hello world";
+        //    radioButton.GroupName = "I'm a radio button";
+        //});
+    });
+
+    settings.Items.Add(m => m.EmployeeModel.DepId, itemSettings =>
+    {
+        itemSettings.NestedExtension().ComboBox(combox =>
+        {
+            combox.ShowModelErrors = true;
+            combox.AccessibilityCompliant = true;
+            combox.Properties.DropDownStyle = DropDownStyle.DropDown;
+            combox.Properties.ValueField = "DepId";
+            combox.Properties.TextField = "DepName";
+            combox.Properties.ValueType = typeof(int);
+            combox.Properties.IncrementalFilteringMode = IncrementalFilteringMode.StartsWith;
+
+            combox.Properties.DataSource = Model.DepartmentModels;
+            combox.SelectedIndex = 0;
+        });
+    });
+
+    settings.Items.Add(m => m.EmployeeModel.EmployeeNo, itemSettings =>
+    {
+        itemSettings.NestedExtension().TextBox(textBox =>
+        {
+            textBox.ShowModelErrors = true;
+            textBox.AccessibilityCompliant = true;
+        });
+
+    });
+
+    settings.Items.Add(m => m.EmployeeModel.EmployeeAge).HelpText = "Must be between 18 and 100";
+
+    settings.Items.Add(m => m.EmployeeModel.BirthDate, itemSettings =>
+    {
+        ((DateEditSettings)itemSettings.NestedExtensionSettings).ShowModelErrors = true;
+        ((DateEditSettings)itemSettings.NestedExtensionSettings).AccessibilityCompliant = true;
+    });
+
+    settings.Items.Add(m => m.EmployeeModel.EmployeePhone, itemSettings =>
+    {
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).ShowModelErrors = true;
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).AccessibilityCompliant = true;
+    });
+    settings.Items.Add(m => m.EmployeeModel.EmployeeEmail, itemSettings =>
+    {
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).ShowModelErrors = true;
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).AccessibilityCompliant = true;
+    });
+    settings.Items.Add(itemSettings =>
+    {
+        itemSettings.Caption = "";
+        //itemSettings.ShowCaption=DefaultBoolean.False;
+        //itemSettings.NestedExtension().Button(button =>
+        //{
+        //    button.Name = "btnSubmit";
+        //    button.Text = "Submit";
+        //    button.UseSubmitBehavior = true;
+        //});
+
+        itemSettings.SetNestedContent(() =>
+        {
+            ViewContext.Writer.Write("<div class='employee-submit'>");
+            Html.DevExpress().Button(button =>
+            {
+                button.Name = "btnSubmit";
+                button.Text = "Submit";
+                button.ControlStyle.CssClass = "button";
+                button.UseSubmitBehavior = true;
+            }).Render();
+
+            Html.DevExpress().Button(button =>
+            {
+                button.Name = "btnClear";
+                button.Text = "Clear";
+                button.ControlStyle.CssClass = "button";
+                button.ClientSideEvents.Click = "function(s, e){ ASPxClientEdit.ClearEditorsInContainer();}";
+
+            }).Render();
+            ViewContext.Writer.Write("</div>");
+        });
+    });
+}).GetHtml()
+
+    @*@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "FormLayout";
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.UseDefaultPaddings = false;
+    settings.Styles.LayoutGroup.Cell.Paddings.Padding = Unit.Pixel(0);
+
+    settings.Items.Add(new EmptyLayoutItem() { Height = 20 });
+
+    settings.Items.Add(itemSettings =>
+    {
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.NestedExtension().Label(label =>
+        {
+            label.Name = "label1";
+            label.Text = "Fields marked with an asterisk (*) are required.";
+        });
+    });
+
+    settings.Items.Add(new EmptyLayoutItem() { Height = 20 });
+
+    settings.Items.Add(m => m.EmployeeName, itemSettings =>
+    {
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).ShowModelErrors = true;
+        ((TextBoxSettings)itemSettings.NestedExtensionSettings).AccessibilityCompliant = true;
+    });
+
+    settings.Items.Add(m => m.BirthDate, itemSettings =>
+    {
+        ((DateEditSettings)itemSettings.NestedExtensionSettings).ShowModelErrors = true;
+        ((DateEditSettings)itemSettings.NestedExtensionSettings).AccessibilityCompliant = true;
+    });
+
+    settings.Items.Add(m => m.EmployeeOpus, itemSettings =>
+    {
+        itemSettings.NestedExtension().ComboBox(comboBox =>
+        {
+            comboBox.ShowModelErrors = true;
+            comboBox.AccessibilityCompliant = true;
+            comboBox.Properties.DropDownStyle = DropDownStyle.DropDown;
+            comboBox.Properties.Items.Add("Academic", 1);
+            comboBox.Properties.Items.Add("Administrative", 2);
+            comboBox.Properties.Items.Add("Art/Entertainment", 3);
+        });
+    });
+
+    settings.Items.Add(m => m.EmployeeSex, itemSettings =>
+    {
+        itemSettings.NestedExtension().RadioButtonList(radioButtonList =>
+        {
+            radioButtonList.AccessibilityCompliant = true;
+            radioButtonList.Properties.RepeatDirection = RepeatDirection.Horizontal;
+            radioButtonList.Properties.Items.Add("Male", 0);
+            radioButtonList.Properties.Items.Add("Female", 1);
+            //radioButtonList.ControlStyle.Border.BorderColor = Color.Transparent;
+        });
+    });
+
+    settings.Items.Add(new EmptyLayoutItem() { Height = 20 });
+
+    settings.Items.Add(itemSettings =>
+    {
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.NestedExtension().Button(button =>
+        {
+            button.Name = "btnSubmit";
+            button.Text = "Submit";
+            button.UseSubmitBehavior = true;
+        });
+    });
+}).GetHtml()*@
+
+    @*@Html.DevExpress().FormLayout(settings =>
 {
     settings.Name = "jQueryValidationFormLayout";
     settings.Style.Add("float", "left");
@@ -66,8 +338,11 @@
             ViewContext.Writer.Write("</div>");
         });
     });
-}).GetHtml()
-    Html.DevExpress().ValidationSummary().GetHtml();
+}).GetHtml()*@
+    //Html.DevExpress().ValidationSummary().GetHtml();
+   
+
+
     @*@Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -122,7 +397,3 @@
             </div>
         </div>*@
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

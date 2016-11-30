@@ -18,10 +18,10 @@ namespace DevExpressDemo.Controllers
 
         public ActionResult Index()
         {
-            if (Session["userName"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //if (Session["userName"] == null)
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
 
             return View(_departmentLogic.GetAll());
         }

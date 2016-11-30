@@ -30,7 +30,13 @@ namespace DevExpressDemo.Models
             {
                 EmployeeId = employee.EmployeeId,
                 EmployeeName = employee.EmployeeName,
+                DepId = employee.DepId,
+                EmployeeSex = employee.EmployeeSex,
+                EmployeeNo = employee.EmployeeNo,
+                EmployeeAge = employee.EmployeeAge,
+                BirthDate = employee.BirthDate,
                 EmployeePhone = employee.EmployeePhone,
+                EmployeeEmail = employee.EmployeeEmail,
                 EmployeeAddress = employee.EmployeeAddress,
                 EmployeeEducation = employee.EmployeeEducation,
                 EmployeeOpus = employee.EmployeeOpus
@@ -43,7 +49,13 @@ namespace DevExpressDemo.Models
             {
                 EmployeeId = employee.EmployeeId,
                 EmployeeName = employee.EmployeeName,
+                DepId = employee.DepId,
+                EmployeeSex = employee.EmployeeSex,
+                EmployeeNo = employee.EmployeeNo,
+                EmployeeAge = employee.EmployeeAge,
+                BirthDate = employee.BirthDate,
                 EmployeePhone = employee.EmployeePhone,
+                EmployeeEmail = employee.EmployeeEmail,
                 EmployeeAddress = employee.EmployeeAddress,
                 EmployeeEducation = employee.EmployeeEducation,
                 EmployeeOpus = employee.EmployeeOpus

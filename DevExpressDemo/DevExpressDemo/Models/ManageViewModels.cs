@@ -64,4 +64,10 @@ namespace DevExpressDemo.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class EmployeeViewModel
+    {
+        public EmployeeModel EmployeeModel { get; set; }
+        public IEnumerable<DepartmentModel> DepartmentModels { get; set; }
+    }
 }

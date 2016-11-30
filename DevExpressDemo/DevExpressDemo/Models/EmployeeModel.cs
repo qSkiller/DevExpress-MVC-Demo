@@ -10,14 +10,15 @@ namespace DevExpressDemo.Models
 
         [Display(Name = "Name:")]
         [Required(ErrorMessage = "Name is required")]
-        [StringLength(30, ErrorMessage = "Must be under 50 characters")]
+        [StringLength(5, ErrorMessage = "Must be under 20 characters")]
         public string EmployeeName { get; set; }
 
+        [Display(Name = "Department")]
         public int DepId { get; set; }
 
-        [Display(Name = "Sex")]
-        [Required(ErrorMessage = "Sex is required")]
-        public string EmployeeSex { get; set; }
+        [Display(Name = "Gender")]
+        [Required(ErrorMessage = "Gender is required")]
+        public int EmployeeSex { get; set; }
 
         [Display(Name = "EmployeeNo")]
         [Required(ErrorMessage = "EmployeeNo is required")]

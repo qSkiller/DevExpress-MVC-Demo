@@ -60,7 +60,13 @@ namespace DevExpressDemo.Logic
             {
                 EmployeeId = x.EmployeeId,
                 EmployeeName = x.EmployeeName,
+                DepId = x.DepId,
+                EmployeeSex = x.EmployeeSex,
+                EmployeeNo = x.EmployeeNo,
+                EmployeeAge = x.EmployeeAge,
+                BirthDate = x.BirthDate,
                 EmployeePhone = x.EmployeePhone,
+                EmployeeEmail = x.EmployeeEmail,
                 EmployeeAddress = x.EmployeeAddress,
                 EmployeeEducation = x.EmployeeEducation,
                 EmployeeOpus = x.EmployeeOpus
