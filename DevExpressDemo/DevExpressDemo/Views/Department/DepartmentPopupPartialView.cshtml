@@ -1,0 +1,35 @@
+﻿
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "pcOverview";
+    settings.Width = 300;
+    settings.Height = 200;
+    //settings.PopupElementID = "popupArea";
+    settings.EnableClientSideAPI = true;
+    settings.AllowDragging = true;
+    settings.DragElement = DragElement.Header;
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.ShowCloseButton = true;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    settings.HeaderText = "Area of Countries";
+    settings.CallbackRouteValues = new
+    {
+        Action = "DepartmentPopup",
+        Controller = "Department"
+    };
+
+    settings.SettingsLoadingPanel.Enabled = true;
+    settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
+    settings.ClientSideEvents.BeginCallback = "function(s, e) { pcOverview_BeginCallback(s,e);}";
+
+    settings.SetContent(() =>
+    {
+        ViewContext.Writer.Write("<div class=\"line\">do some thing ");
+        ViewContext.Writer.Write("<img src=\"" + Url.Content("~/Content/Images/dustbin.png") + "\" alt=\"Area of Countries\" />");
+        ViewContext.Writer.Write("</div><b class=\"Clear\"></b>");
+    });
+
+
+
+}).GetHtml()

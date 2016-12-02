@@ -95,5 +95,17 @@ namespace DevExpressDemo.Controllers
 
             return RedirectToAction("Index", "Department");
         }
+
+
+        [ValidateInput(false)]
+        public PartialViewResult DepartmentPopupPartialView()
+        {
+            return PartialView("DepartmentPopupPartialView");
+        }
+
+        public PartialViewResult DepartmentPopup(int id)
+        {
+            return PartialView("DepartmentPopupPartialView");
+        }
     }
 }

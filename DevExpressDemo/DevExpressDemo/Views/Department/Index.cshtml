@@ -1,6 +1,33 @@
 ﻿@model System.Collections.IEnumerable
 
+<script type="text/javascript">
+
+    var id = 10;
+
+    function modelClick() {
+        pcOverview.Show();
+        pcOverview.PerformCallback();
+    }
+
+    function pcOverview_BeginCallback(s, e) {
+        console.log(s);
+        console.log(e);
+        e.customArgs['id'] = this.id;
+        e.customArgs['value'] = this.id;
+    }
+
+    function WrapperDropdownInit() {
+        
+    }
+
+</script>
+
 @Html.Action("DepartmentPartialView", "Department")
+
+@Html.ActionLink("Click this modal", " ", null, new { href = "javascript:modelClick()" })
+
+@*@Html.Action("DepartmentPopupPartialView", "Department")*@
+@Html.Partial("DepartmentPopupPartialView")
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
