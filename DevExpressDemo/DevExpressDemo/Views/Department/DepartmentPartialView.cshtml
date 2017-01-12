@@ -22,7 +22,7 @@
         settings.Settings.ShowFilterRow = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
-        settings.SettingsPager.PageSize = 2;
+        settings.SettingsPager.PageSize = 10;
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
@@ -30,7 +30,7 @@
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
 
         settings.Columns.Add("DepNo");
-        settings.Columns.Add("DepName");
+        settings.Columns.Add("DepName").SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
         settings.Columns.Add("OfficeLocation");
     });
     if (ViewData["EditError"] != null)
